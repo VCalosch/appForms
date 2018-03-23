@@ -1,0 +1,97 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<p>
+  Hello
+</p>
+<form (ngSubmit)="guardar(forma)" #forma="ngForm">
+
+  <div>
+
+    <div class="form-group row ">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control" [ngClass]="{ 'is-invalid': (nombre.errors?.required) && nombre.touched }"
+               type="text"
+               placeholder="Nombre"
+               name="Nombre"
+               [(ngModel)]="usuario.nombre"
+               minlenght="5"
+               required
+               #nombre="ngModel"><!--La variable local hace referencia al form control-->
+
+               <div *ngIf="nombre.errors?.required" class="invalid-feedback">
+                 Este campo es requerido
+               </div>
+               <div *ngIf="nombre.errors?.minlenght">
+                 Por lo menos {{ nombre.errors.minlenght.requiredLength }} caracteres
+               </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Apellido"
+               name="Apellido"
+               minlenght="5"
+               [(ngModel)]="usuario.apellido"
+               required>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Correo electrónico"
+             name="CorreoElectronico"
+             minlenght="5"
+             [(ngModel)]="usuario.correo"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             required>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Pais</label>
+    <div class="col-md-8">
+      <select [(ngModel)]="usuario.pais" name="s" class="form-control">
+        <option value="">Selecciona un pais</option>
+        <option *ngFor="let pais of paises" value="pais.codigo">{{pais.nombre}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="" class="col-2 col-form-label">Pais</label>
+    <div class="col-md-8">
+      <select class="custom-select" name="pais" [(ngModel)]="usuario.pais">
+          <option value="" disabled selected>Selecciona un Pais</option>
+        <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+<pre>
+  {{usuario | json}}
+</pre>
